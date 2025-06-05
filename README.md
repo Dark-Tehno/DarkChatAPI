@@ -12,7 +12,7 @@ pip install git+https://github.com/Dark-Tehno/DarkChatAPI.git
 
 ```python
 from DarkChat import chat, ws_chat # или другие функции
-
+from DarkChat import account
 # Пример получения токена (предполагается, что у вас есть функция login)
 token = account.login("user", "password")
 
