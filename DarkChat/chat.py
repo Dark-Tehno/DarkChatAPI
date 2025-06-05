@@ -4,7 +4,7 @@ import threading
 import json
 
 
-BASE_URL = 'https://vsp210.ru/api/'
+BASE_URL = 'https://vsp210.ru/api/v1/'
 BASE_URL_WS = 'wss://vsp210.ru/ws/'
 
 def chats(token):
