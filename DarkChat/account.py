@@ -33,10 +33,9 @@ def register(username, email, password):
         return response.status_code, response.text
 
 
-
 def logout(token):
-    url = f'{BASE_URL}logout/{token}/'
-    response = requests.get(url)
+    url = f'{base_url}logout/'
+    response = requests.post(url, data={'token': token})
     if response.status_code == 200:
         return 'Logged out successfully', response.status_code
     else:
@@ -45,8 +44,8 @@ def logout(token):
 
 
 def my_data(token):
-    url = f'{BASE_URL}my-data/{token}/'
-    response = requests.get(url)
+    url = f'{base_url}my-data/'
+    response = requests.post(url, data={'token': token})
     if response.status_code == 200:
         data = response.json()
         return data, response.status_code
