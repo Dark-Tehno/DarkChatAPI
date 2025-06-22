@@ -4,8 +4,8 @@ import threading
 import json
 
 
-BASE_URL = 'https://vsp210.ru/api/v1/'
-BASE_URL_WS = 'wss://vsp210.ru/ws/'
+BASE_URL = 'http://127.0.0.1:8000/api/v1/'
+BASE_URL_WS = 'ws://127.0.0.1:8000/ws/'
 
 def chats(token):
     url = f'{BASE_URL}chats/'
@@ -17,7 +17,7 @@ def chats(token):
         data = response.json()
         return data, response.status_code
     else:
-        return response.status_code, response.text
+        return response.text, response.status_code
 
 def chat(token, chat_id):
     url = f'{BASE_URL}chat/{chat_id}/'
@@ -29,7 +29,7 @@ def chat(token, chat_id):
         data = response.json()
         return data, response.status_code
     else:
-        return response.status_code, response.text
+        return response.text, response.status_code
 
 
 # --- WebSocket Functionality ---

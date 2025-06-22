@@ -11,7 +11,7 @@ def read_readme():
 
 setup(
     name='DarkChatAPI',  
-    version='0.1.0',   
+    version='0.1.3',   
     author='vsp210', 
     author_email='vsp210@gmail.com', 
     description='Клиентская библиотека Python для API DarkChat',
