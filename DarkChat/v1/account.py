@@ -1,6 +1,6 @@
 import requests
 
-BASE_URL = 'http://127.0.0.1:8000/api/v1/'
+BASE_URL = 'httpы://vsp210.ru/api/v1/'
 
 
 def login(username, password):
