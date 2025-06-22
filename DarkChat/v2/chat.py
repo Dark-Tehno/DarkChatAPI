@@ -4,15 +4,13 @@ import threading
 import json
 
 
-BASE_URL = 'https://vsp210.ru/api/v1/'
+BASE_URL = 'https://vsp210.ru/api/v2/'
 BASE_URL_WS = 'wss://vsp210.ru/ws/'
 
 def chats(token):
     url = f'{BASE_URL}chats/'
-    data = {
-        'token': token
-        }
-    response = requests.post(url, data=data)
+    headers = {'Authorization': f'Token {token}'}
+    response = requests.post(url, headers=headers)
     if response.status_code == 200:
         data = response.json()
         return data, response.status_code
@@ -21,10 +19,8 @@ def chats(token):
 
 def chat(token, chat_id):
     url = f'{BASE_URL}chat/{chat_id}/'
-    data = {
-        'token': token
-        }
-    response = requests.post(url, data=data)
+    headers = {'Authorization': f'Token {token}'}
+    response = requests.post(url, headers=headers)
     if response.status_code == 200:
         data = response.json()
         return data, response.status_code

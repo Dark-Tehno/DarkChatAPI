@@ -1,6 +1,6 @@
 import requests
 
-BASE_URL = 'https://vsp210.ru/api/v1/'
+BASE_URL = 'https://vsp210.ru/api/v2/'
 
 
 def login(username, password):
@@ -9,7 +9,7 @@ def login(username, password):
         'username': username,
         'password': password
         }
-    response = requests.post(url, data=data)
+    response = requests.post(url, json=data)
     if response.status_code == 200:
         token = response.json().get('token')
         return token, response.status_code
@@ -25,7 +25,7 @@ def register(username, email, password):
         'email': email,
         'password': password
         }
-    response = requests.post(url, data=data)
+    response = requests.post(url, json=data)
     if response.status_code == 200:
         token = response.json().get('token')
         return token, response.status_code
@@ -35,7 +35,8 @@ def register(username, email, password):
 
 def logout(token):
     url = f'{BASE_URL}logout/'
-    response = requests.post(url, data={'token': token})
+    headers = {'Authorization': f'Token {token}'}
+    response = requests.post(url, headers=headers)
     if response.status_code == 200:
         return 'Logged out successfully', response.status_code
     else:
@@ -45,7 +46,8 @@ def logout(token):
 
 def my_data(token):
     url = f'{BASE_URL}my-data/'
-    response = requests.post(url, data={'token': token})
+    headers = {'Authorization': f'Token {token}'}
+    response = requests.post(url, headers=headers)
     if response.status_code == 200:
         data = response.json()
         return data, response.status_code
@@ -66,11 +68,11 @@ def user_data(username):
 
 def search(token, query):
     url = f'{BASE_URL}search/'
+    headers = {'Authorization': f'Token {token}'}
     data = {
-        'token': token,
         'q': query
         }
-    response = requests.post(url, data=data)
+    response = requests.post(url, json=data, headers=headers)
     if response.status_code == 200:
         data = response.json()
         return data, response.status_code
