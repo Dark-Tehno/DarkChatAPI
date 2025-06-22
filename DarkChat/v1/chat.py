@@ -4,8 +4,8 @@ import threading
 import json
 
 
-BASE_URL = 'http://127.0.0.1:8000/api/v1/'
-BASE_URL_WS = 'ws://127.0.0.1:8000/ws/'
+BASE_URL = 'https://vsp210.ru/api/v1/'
+BASE_URL_WS = 'wss://vsp210.ru/ws/'
 
 def chats(token):
     url = f'{BASE_URL}chats/'
