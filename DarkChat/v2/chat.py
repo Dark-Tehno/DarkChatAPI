@@ -1,7 +1,7 @@
-import requests
 import websocket
 import threading
-import json
+from urllib.parse import urlencode
+from .utils import _api_request
 
 
 BASE_URL = 'https://vsp210.ru/api/v2/'
@@ -10,22 +10,12 @@ BASE_URL_WS = 'wss://vsp210.ru/ws/'
 def chats(token):
     url = f'{BASE_URL}chats/'
     headers = {'Authorization': f'Token {token}'}
-    response = requests.post(url, headers=headers)
-    if response.status_code == 200:
-        data = response.json()
-        return data, response.status_code
-    else:
-        return response.text, response.status_code
+    return _api_request('post', url, headers=headers)
 
 def chat(token, chat_id):
     url = f'{BASE_URL}chat/{chat_id}/'
     headers = {'Authorization': f'Token {token}'}
-    response = requests.post(url, headers=headers)
-    if response.status_code == 200:
-        data = response.json()
-        return data, response.status_code
-    else:
-        return response.text, response.status_code
+    return _api_request('post', url, headers=headers)
 
 
 # --- WebSocket Functionality ---
@@ -55,7 +45,8 @@ def ws_online(token,
     """
     if enable_trace:
         websocket.enableTrace(True)
-    ws_url = f"{BASE_URL_WS}online/?token={token}"
+    params = urlencode({'token': token})
+    ws_url = f"{BASE_URL_WS}online/?{params}"
     ws = websocket.WebSocketApp(ws_url,
                                 on_open=on_open_callback,
                                 on_message=on_message_callback,
@@ -79,7 +70,8 @@ def ws_chat(token, chat_id,
     """
     if enable_trace:
         websocket.enableTrace(True)
-    ws_url = f"{BASE_URL_WS}chat/{chat_id}/?token={token}"
+    params = urlencode({'token': token})
+    ws_url = f"{BASE_URL_WS}chat/{chat_id}/?{params}"
     ws = websocket.WebSocketApp(ws_url,
                                 on_open=on_open_callback,
                                 on_message=on_message_callback,

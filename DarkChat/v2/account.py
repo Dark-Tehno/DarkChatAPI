@@ -1,80 +1,54 @@
-import requests
+from .utils import _api_request
 
 BASE_URL = 'https://vsp210.ru/api/v2/'
 
 
 def login(username, password):
     url = f'{BASE_URL}login/'
-    data = {
+    json_data = {
         'username': username,
         'password': password
-        }
-    response = requests.post(url, json=data)
-    if response.status_code == 200:
-        token = response.json().get('token')
-        return token, response.status_code
-    else:
-        return response.text, response.status_code
-
+    }
+    data, status_code = _api_request('post', url, json_data=json_data)
+    if status_code == 200 and isinstance(data, dict):
+        return data.get('token'), status_code
+    return data, status_code
 
 
 def register(username, email, password):
     url = f'{BASE_URL}register/'
-    data = {
+    json_data = {
         'username': username,
         'email': email,
         'password': password
-        }
-    response = requests.post(url, json=data)
-    if response.status_code == 200:
-        token = response.json().get('token')
-        return token, response.status_code
-    else:
-        return response.text, response.status_code
+    }
+    data, status_code = _api_request('post', url, json_data=json_data)
+    if status_code == 200 and isinstance(data, dict):
+        return data.get('token'), status_code
+    return data, status_code
 
 
 def logout(token):
     url = f'{BASE_URL}logout/'
     headers = {'Authorization': f'Token {token}'}
-    response = requests.post(url, headers=headers)
-    if response.status_code == 200:
-        return 'Logged out successfully', response.status_code
-    else:
-        return response.text, response.status_code
-
+    return _api_request('post', url, headers=headers)
 
 
 def my_data(token):
     url = f'{BASE_URL}my-data/'
     headers = {'Authorization': f'Token {token}'}
-    response = requests.post(url, headers=headers)
-    if response.status_code == 200:
-        data = response.json()
-        return data, response.status_code
-    else:
-        return response.text, response.status_code
-
+    return _api_request('post', url, headers=headers)
 
 
 def user_data(username):
     url = f'{BASE_URL}user-data/{username}/'
-    response = requests.get(url)
-    if response.status_code == 200:
-        data = response.json()
-        return data, response.status_code
-    else:
-        return response.text, response.status_code
+    return _api_request('get', url)
 
 
 def search(token, query):
     url = f'{BASE_URL}search/'
     headers = {'Authorization': f'Token {token}'}
-    data = {
+    json_data = {
         'q': query
-        }
-    response = requests.post(url, json=data, headers=headers)
-    if response.status_code == 200:
-        data = response.json()
-        return data, response.status_code
-    else:
-        return response.text, response.status_code
+    }
+    return _api_request('post', url, headers=headers, json_data=json_data)
