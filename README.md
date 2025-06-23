@@ -11,8 +11,8 @@ pip install git+https://github.com/Dark-Tehno/DarkChatAPI.git
 ## Использование
 
 ```python
-from DarkChat.v1 import ws_chat, chats # или другие функции
-from DarkChat.v1 import account
+from DarkChat.v2 import ws_chat, chats # или другие функции
+from DarkChat.v2 import account
 
 token, status_code = account.login("username", "password")
 
